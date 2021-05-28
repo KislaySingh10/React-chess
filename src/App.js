@@ -3,6 +3,7 @@ import Chessboard from "chessboardjsx"
 import React,{ useEffect, useRef, useState } from "react";
 
 function App() {
+  const [styles,setStyles]= useState({})
   let game = useRef(null)
   const [fen, setFen] = useState("start")
   useEffect(() => {
@@ -22,6 +23,26 @@ function App() {
     game.current.reset();
     setFen("start")
   }
+  const highlightSquare=(square)=>{
+    setStyles(prevValue => {return {...prevValue,[square]:{
+      background: "radial-gradient(circle, #fffc00 36%, transparent 40%)"
+    }}})
+  }
+  const mouseOver=(square)=>{
+    let moves=game.current.moves({
+      square: square,
+      verbose: true
+    })
+    if(moves.length === 0 ){
+      return;
+    }
+    highlightSquare(square);
+    for (const x of moves)
+      highlightSquare(x.to)
+  }
+  const mouseOut=()=>{
+    setStyles({})
+  }
   return (
     <>
     {
@@ -35,6 +56,7 @@ function App() {
     </div>
     <div className="app">
       <Chessboard 
+      id="board"
       position={fen} 
       onDrop={onDrop}
       boardStyle={{
@@ -42,7 +64,10 @@ function App() {
         boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
       }}
       lightSquareStyle={{ backgroundColor: "#ADEFD1FF" }}
-      darkSquareStyle={{ backgroundColor: "#00A4CCFF" }} >
+      darkSquareStyle={{ backgroundColor: "#00A4CCFF" }}
+      onMouseOverSquare={mouseOver}
+      onMouseOutSquare={mouseOut} 
+      squareStyles={styles}>
 
       </Chessboard> 
     </div>
