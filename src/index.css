@@ -10,7 +10,7 @@ body {
 .app{
   display:flex;
   justify-content: center;
-  margin:3rem;
+  margin:2rem;
 }
 button{
   height:3rem;

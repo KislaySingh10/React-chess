@@ -71,8 +71,9 @@ function App() {
 
       </Chessboard> 
     </div>
-    <div style={{textAlign:"center"}}>
+    <div style={{position:"absolute",left:"44%",top:"90%",textAlign:"center"}}>
       {fen==="start" && <h5>Start with white</h5>}
+      <i >Developed By Kislay Singh</i>
     </div>
     </>
   );
